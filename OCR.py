@@ -93,31 +93,9 @@ def MatrixToImage(matrix):
     #img = img.resize((64,64))
     return img
 
-def corr(k,l,A,B):
-    sub_A = A 
-    sub_B = B 
-    c = np.array([],dtype=float)
-    cor = 0
-    if (k<0):
-        sub_B = sub_B[abs(k):,:]
-        sub_A = sub_A[:sub_B.shape[0],:]
-    else :    
-        sub_A = A[ k: k + sub_B.shape[0],:] 
-        if sub_A.shape[0] != sub_B.shape[0]: sub_B = sub_B[:sub_A.shape[0] - sub_B.shape[0] ,:]
-        
-    
-    if (l < 0):
-        sub_B = sub_B[:,abs(l):]
-        sub_A = sub_A[:,:sub_B.shape[1]]
-    else :
-        sub_A = sub_A[:,l: l + sub_B.shape[1]]
-        if sub_A.shape[1] != sub_B.shape[1]: sub_B = sub_B[:,:sub_A.shape[1] - sub_B.shape[1]]
-            
-     
-    if (sub_A.size != 0 ): 
-        c = sub_A * sub_B
-       
-    if sub_A.any() != 0 and sub_B.any() != 0   : cor = np.sum(c) / np.sqrt(np.sum(A**2) * np.sum(B**2))
+def corr(A,B):
+    cor = 0       
+    if A.any() != 0 and B.any() != 0   : cor = np.sum(A * B) / np.sqrt(np.sum(A**2) * np.sum(B**2))
     return cor
 
 
@@ -139,7 +117,7 @@ def OCR(image):
       B=matrice_img(B)
     #   C2 = CorrMat(A,B)
     #   maxi = C2[B.shape[0]-1][B.shape[1]-1] 
-      maxi = corr(0,0,A,B)
+      maxi = corr(A,B)
       result.update({maxi:str(j)})
     result2={}
     for j in style:
@@ -147,7 +125,7 @@ def OCR(image):
         B=np.array(B,dtype=int)
         # C2 = CorrMat(A,B)
         # maxi = C2[B.shape[0]-1][B.shape[1]-1]
-        maxi = corr(0,0,A,B)
+        maxi = corr(A,B)
         result2.update({maxi:str(j)})
         
     return result[max(result)],result2[max(result2)],max(result2)
