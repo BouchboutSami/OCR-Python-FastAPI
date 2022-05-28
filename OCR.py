@@ -1,8 +1,6 @@
 from PIL import Image
 import cv2
-from matplotlib import pyplot as plt
 import numpy as np 
-from io import BytesIO
 
 style=["Calibri","Cambria","courier new","Franklin-Gothic","futura","Helvetica"
       ,"JosefinSans","Montserrat","OpenSans","times new roman"]
@@ -13,10 +11,6 @@ def binarisation(image):
     binary_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
     data = Image.fromarray(binary_img)
     return binary_img,data
-
-def afficher_img(image):
-    plt.imshow(cv2.cvtColor(image, 3))
-    plt.show()
     
 def save_img(image,path):
     data = Image.fromarray(image)
