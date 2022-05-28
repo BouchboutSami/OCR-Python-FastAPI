@@ -1,6 +1,4 @@
 
-altgraph==0.17.2
-
 anaconda-navigator==2.1.2
 
 anyio==3.5.0
